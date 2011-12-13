@@ -1,8 +1,8 @@
 ### 概要
 
-![Screens](https://github.com/downloads/keijiro/unity-systemfontrenderer/screens.jpg)
-
 Unity iOS および Android においてシステムフォントをテクスチャにレンダリングするプラグインの実装です。
+
+![Screens](https://github.com/downloads/keijiro/unity-systemfontrenderer/screens.jpg)
 
 ### 使い方
 
@@ -28,4 +28,4 @@ Android ではアクティビティの置き換えを行っているため、組
 
   1. android ディレクトリ内にあるライブラリパッケージを自分のプロダクトの名前空間に合わせて改築する。
   1. ant を使ってビルドし、生成された jar ファイルで Plugins/Android/SystemFontRenderer.jar を置き換える。
-  1. Plugins/Android/AndroidManifest.xml 内のパッケージの記述を更新する。
+  1. Plugins/Android/AndroidManifest.xml 内にあるパッケージ名の記述を更新する。
