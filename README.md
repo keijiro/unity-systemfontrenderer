@@ -1,5 +1,7 @@
 ### 概要
 
+![Screens](https://github.com/downloads/keijiro/unity-systemfontrenderer/screens.jpg)
+
 Unity iOS および Android においてシステムフォントをテクスチャにレンダリングするプラグインの実装です。
 
 ### 使い方
