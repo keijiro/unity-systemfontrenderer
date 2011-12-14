@@ -56,6 +56,7 @@ public class TextEntry {
         textPaint.setARGB(0xff, 0xff, 0xff, 0xff);
         // キャンバスを使って一行づつ描画。
         Canvas canvas = new Canvas(bitmap);
+        canvas.scale(1, -1, 0, mHeight / 2);
         int y = mTextSize;
         for (String line : mText.split("\n")) {
             canvas.drawText(line, 0, y, textPaint);
