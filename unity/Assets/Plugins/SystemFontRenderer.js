@@ -17,7 +17,34 @@ private var renderedText : String;
 
 #if UNITY_EDITOR
 
+private var targetMaterial : Material;
+private var renderTexture : RenderTexture;
+
+function OnDestroy() {
+    if (renderTexture) Destroy(renderTexture);
+}
+
 function BindMaterial(material : Material) {
+    targetMaterial = material;
+}
+
+function Update() {
+    if (text != renderedText) {
+        if (renderTexture) Destroy(renderTexture);
+
+        renderTexture = new RenderTexture(textureWidth, textureHeight, 0, RenderTextureFormat.ARGB32);
+        targetMaterial.mainTexture = renderTexture;
+
+        var altRenderer = (new GameObject()).AddComponent.<SystemFontRendererForEditor>();
+
+        altRenderer.target = renderTexture;
+        altRenderer.text = text;
+        altRenderer.fontSize = textSize;
+        
+        altRenderer.DoRender();
+
+        renderedText = text;
+    }
 }
 
 #else
