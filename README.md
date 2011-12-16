@@ -12,7 +12,11 @@ SystemFontRenderer.js を何らかのゲームオブジェクトに付与しま�
 
 これで SystemFontRenderer 内にテクスチャが生成されます。これを表示するには、何らかのマテリアルにバインドする必要があります。例えば、同ゲームオブジェクトにある表示物のマテリアルにバインドするには次のようにします。
 
+    // JavaScript
     GetComponent.<SystemFontRenderer>().BindMaterial(renderer.material);
+    
+    // C#
+    GetComponent<SystemFontRenderer>().BindMaterial(renderer.material);
 
 なお、パラメーターの Text は動的な変更に対応しています。
 
