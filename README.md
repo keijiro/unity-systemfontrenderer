@@ -28,11 +28,7 @@ SystemFontRenderer.js を何らかのゲームオブジェクトに付与しま�
 
 iOS では Plugins ディレクトリの内容を任意のプロジェクトにインポートするだけです。
 
-Android ではアクティビティの置き換えを行っているため、組み込みが若干面倒です。次のような手続きが推奨されます。
-
-  1. android ディレクトリ内にあるライブラリパッケージを自分のプロダクトの名前空間に合わせて改築する。
-  1. ant を使ってビルドし、生成された jar ファイルで Plugins/Android/SystemFontRenderer.jar を置き換える。
-  1. Plugins/Android/AndroidManifest.xml 内にあるパッケージ名の記述を更新する。
+Android ではアクティビティの置き換えを行っているため、組み込みが若干面倒です。詳しくは[こちらの解説](https://github.com/keijiro/unity-systemfontrenderer/wiki/AboutAndroidPlugin)を参照してください。
 
 ### Editor 上でのプレビューについて
 
