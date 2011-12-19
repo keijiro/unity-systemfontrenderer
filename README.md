@@ -6,7 +6,7 @@ Unity iOS および Android においてシステムフォントをテクスチ�
 
 ### 使い方
 
-SystemFontRenderer.js を何らかのゲームオブジェクトに付与します。パラメーターとして Inspector 上に "Text", "Text Size", "Texture Width", "Texture Height" が表示されるので、これにそれぞれ値を設定します。
+SystemFontRenderer.js を何らかのゲームオブジェクトに付加します。パラメーターとして Inspector 上に "Text", "Text Size", "Texture Width", "Texture Height" が表示されるので、これにそれぞれ値を設定します。
 
 **注意** Texture Width と Texture Height は 2 のべき乗サイズでなくてはなりません。
 
@@ -35,3 +35,7 @@ Android ではアクティビティの置き換えを行っているため、組
 Editor 上でも結果をプレビューすることができますが、実験的な実装のため動作が怪しいです。例えばデモプログラムでは、最初は黒い文字が出てしまっていたりします。
 
 なお、テンポラリオブジェクトを配置するためのレイヤーとして 31 番を勝手に利用しています。もし既に 31 番レイヤーを使用している場合、描画が競合する可能性があります。
+
+### 既知の問題について
+
+既知の問題がいくつか存在します。詳しくは [issues](https://github.com/keijiro/unity-systemfontrenderer/issues) を参照してください。
