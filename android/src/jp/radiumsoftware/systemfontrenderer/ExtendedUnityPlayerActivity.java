@@ -2,6 +2,7 @@ package jp.radiumsoftware.systemfontrenderer;
 
 import jp.radiumsoftware.systemfontrenderer.plugin.TextBuffer;
 
+/*
 import com.unity3d.player.UnityPlayerActivity;
 
 import android.opengl.GLSurfaceView;
@@ -9,8 +10,18 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.view.ViewGroup.LayoutParams;
 import android.graphics.PixelFormat;
+*/
 
-public class ExtendedUnityPlayerActivity extends UnityPlayerActivity {
+import android.app.Activity;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+public class ExtendedUnityPlayerActivity extends Activity {
+	private ExtendedUnityPlayer mUnityPlayer;
     private TextBuffer mTextBuffer;
 
     public void setTextEntry(int id, String text, int width, int height, int textSize, int textureId) {
@@ -20,25 +31,65 @@ public class ExtendedUnityPlayerActivity extends UnityPlayerActivity {
     public void removeTextEntry(int id) {
         mTextBuffer.removeEntry(id);
     }
-    
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+	// UnityPlayer.init() should be called before attaching the view to a layout. 
+	// UnityPlayer.quit() should be the last thing called; it will terminate the process and not return.
+	protected void onCreate (Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
         mTextBuffer = new TextBuffer();
 
-        ExtendedUnityPlayer player = new ExtendedUnityPlayer(this, mTextBuffer);
-        player.init(0, false);
-        
-        GLSurfaceView mainView = new GLSurfaceView(getApplication());
-        mainView.setZOrderMediaOverlay(true);
-        mainView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-        mainView.setRenderer(player);
-        mainView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-         
-        FrameLayout layout = new FrameLayout(getApplicationContext());
-        layout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        layout.addView(mainView);
-        setContentView(layout);
-    }
+		setTheme(android.R.style.Theme_NoTitleBar_Fullscreen);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+							 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
+		mUnityPlayer = new ExtendedUnityPlayer(this, mTextBuffer);
+
+		int glesMode = mUnityPlayer.getSettings().getInt("gles_mode", 1);
+		boolean trueColor8888 = false;
+		mUnityPlayer.init(glesMode, trueColor8888);
+
+		View playerView = mUnityPlayer.getView();
+		setContentView(playerView);
+		playerView.requestFocus();
+	}
+	protected void onDestroy ()
+	{
+		super.onDestroy();
+		mUnityPlayer.quit();
+	}
+
+	// onPause()/onResume() must be sent to UnityPlayer to enable pause and resource recreation on resume.
+	protected void onPause()
+	{
+		super.onPause();
+		mUnityPlayer.pause();
+	}
+	protected void onResume()
+	{
+		super.onResume();
+		mUnityPlayer.resume();
+	}
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		super.onConfigurationChanged(newConfig);
+		mUnityPlayer.configurationChanged(newConfig);
+	}
+	public void onWindowFocusChanged(boolean hasFocus)
+	{
+		super.onWindowFocusChanged(hasFocus);
+		mUnityPlayer.windowFocusChanged(hasFocus);
+	}
+
+	// Pass any keys not handled by (unfocused) views straight to UnityPlayer
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		return mUnityPlayer.onKeyDown(keyCode, event);
+	}
+	public boolean onKeyUp(int keyCode, KeyEvent event)
+	{
+		return mUnityPlayer.onKeyUp(keyCode, event);
+	}
 }
