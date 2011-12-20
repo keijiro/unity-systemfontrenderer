@@ -23,8 +23,6 @@ private var textList : String[] = [
     "偕老\n同穴"
 ];
 
-private var ry : float = Random.Range(30.0, 180.0);
-
 function Start() {
     var fontRenderer = GetComponent.<SystemFontRenderer>();
 
@@ -36,6 +34,3 @@ function Start() {
     }
 }
 
-function Update() {
-    transform.localRotation = Quaternion.AngleAxis(ry * Time.deltaTime, Vector3.up) * transform.localRotation;
-}
