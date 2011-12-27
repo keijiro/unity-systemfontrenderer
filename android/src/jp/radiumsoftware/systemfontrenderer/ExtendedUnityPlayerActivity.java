@@ -2,16 +2,6 @@ package jp.radiumsoftware.systemfontrenderer;
 
 import jp.radiumsoftware.systemfontrenderer.plugin.TextBuffer;
 
-/*
-import com.unity3d.player.UnityPlayerActivity;
-
-import android.opengl.GLSurfaceView;
-import android.os.Bundle;
-import android.widget.FrameLayout;
-import android.view.ViewGroup.LayoutParams;
-import android.graphics.PixelFormat;
-*/
-
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -42,11 +32,13 @@ public class ExtendedUnityPlayerActivity extends Activity {
 
 		setTheme(android.R.style.Theme_NoTitleBar_Fullscreen);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-							 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+
 		mUnityPlayer = new ExtendedUnityPlayer(this, mTextBuffer);
 
+		if (mUnityPlayer.getSettings ().getBoolean ("hide_status_bar", true))
+			getWindow ().setFlags (WindowManager.LayoutParams.FLAG_FULLSCREEN,
+			                       WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		int glesMode = mUnityPlayer.getSettings().getInt("gles_mode", 1);
 		boolean trueColor8888 = false;
 		mUnityPlayer.init(glesMode, trueColor8888);
